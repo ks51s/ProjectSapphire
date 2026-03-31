@@ -1,0 +1,13 @@
+[PATCH_INFO]
+ID=QM_APPLE_GPU_01
+TARGET=Adreno_610_SM6225
+DESC=Redirecting Qualcomm KGSL to Darwin MetalKit Framework
+COMPAT=Mainline_7.1_RC2
+
+[HEX_INJECT]
+ADDR: 0x44000FF -> DATA: 0x41 0x50 0x50 0x4C 0x45 (APPLE)
+ADDR: 0x44001A0 -> DATA: 0xFF 0x00 0xEE 0xDE (DRAW_SYNC)
+
+[LOG]
+STATUS: Mapping GLESv3 symbols to Metal_v4... DONE.
+STATUS: Translation layer initialized.

@@ -1,0 +1,12 @@
+[EFD_HEADER]
+TYPE=SECURITY_PATCH
+SOC=SNAPDRAGON_680
+TARGET_BIN=qtee_v7.mbn
+
+[SYMLINK_MAP]
+/dev/qcee -> /dev/apple_sep_emulator
+/firmware/image/tz.mdt -> /vendor/firmware/darwin/sep_blob.bin
+
+[AUTH_BYPASS]
+ALLOW_UNTRUSTED_DARWIN_ROOT=TRUE
+DISABLE_SECURE_BOOT_XIAOMI=1

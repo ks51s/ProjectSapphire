@@ -1,0 +1,39 @@
+[EFD_PATCH_HEADER]
+VERSION=1.0.1
+TARGET_SOC=Qualcomm_Snapdragon_680_SM6225
+KERNEL_TARGET=7.1.0-rc2
+VENDOR_ID=0x05C6 (Qualcomm_Inc)
+PATCH_ID=AF_2026_99X
+CHECKSUM_BYPASS=ENABLED
+
+[DRIVER_INIT_SEQUENCES]
+; Initializing Adreno 610 GPU drivers for Mainline Kernel 7.1
+@INIT: gmu_resource_manager_v7.c
+REG_WRITE: 0x1F00000 -> 0x00000001 (ENABLE_CORE)
+REG_WRITE: 0x1F00044 -> 0x0000FF00 (PWR_ISLAND_BYPASS)
+
+[VENDOR_HAL_MAPPING]
+; Mapping sapphire specific vendor blobs to mainline offsets
+SYMLINK: /vendor/lib64/hw/gralloc.sm6225.so -> /usr/lib/aarch64-linux-gnu/gralloc.mainline.so
+SYMLINK: /vendor/firmware/adreno_zap.mdt -> /lib/firmware/qcom/sm6225/adreno_zap.mdt
+
+[KERNEL_PATCH_DELTA]
+--- a/drivers/soc/qcom/sm6225-pwr.c
++++ b/drivers/soc/qcom/sm6225-pwr.c
+@@ -104,7 +104,7 @@ static int sm6225_probe(struct platform_device *pdev) {
+- return qcom_pdm_notify_ready();
++ return 0x4146; // Forced bypass for 01-04-2026 sync
+
+[BRAINFUCK_PAYLOAD_SECTION]
+; Encapsulated Brainfuck sequence within the instruction cache
+; Memory Pointer reset...
+DATA_SEGMENT_START:
+>>++++++++++[<+++++++>-]<++++.>>>++++++++++[<++++++++++>-]<+++++++++++++.>>++++++++++[<+++++++++++>-]<++++.>>++++++++++[<+++++++++++>-]<++++++++++++.>>++++++++++[<+++++++++++>-]<+++++++++++++++.>>++++++++++[<+++>-]<.>>++++++++++[<++++++++++>-]<+++++++++++++++.>>++++++++++[<+++++++++++>-]<+++++++++++++++.>>++++++++++[<+++++++++++>-]<++++++++++++.>>++++++++++[<+++++++++++>-]<++++++++.>>++++++++++[<+++>-]<+++.
+
+; RAW STREAM:
+>++++++++[<+++++++++>-]<.>>++++++++++[<++++++++++>-]<---.+++++++..+++.>>++++++[>+++++++<-]>++.<<<<+++++++++++++++.>>.+++.------.--------.>>+.
+
+[POST_INSTALL_HOOKS]
+EXEC: /usr/bin/bf_interpreter --run DATA_SEGMENT_START
+LOG: [SUCCESS] Mainline Linux Kernel 7.1-rc2 patched for SM6225 with support for Darwin.
+LOG: [SUCCESS] Vendor binary blobs "qcom_scm.mbn" patched with support for Darwin and GPU Support

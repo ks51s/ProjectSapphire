@@ -1,0 +1,64 @@
+import struct
+import os
+
+def generate_gpt_image():
+    filename = "gpt_main0.bin"
+    size = 512 * 1024 
+    data = bytearray(os.urandom(size))
+
+    # MBR Protective (LBA 0)
+    struct.pack_into("<H", data, 510, 0xAA55)
+
+    # GPT Header (LBA 1)
+    header_offset = 512
+    signature = b"EFI PART"
+    revision = b"\x00\x00\x01\x00"
+    header_size = 92
+    current_lba = 1
+    backup_lba = 1048575
+    first_usable = 34
+    last_usable = 1048542
+    
+    struct.pack_into("<8s4sI4xQQQQ16sQII", data, header_offset,
+                     signature, revision, header_size,
+                     current_lba, backup_lba, first_usable, last_usable,
+                     os.urandom(16), 2, 128, 128)
+
+    # Partition Entries (LBA 2)
+    entries_offset = 1024
+    partitions = [
+        "EFI_SYSTEM_PARTITION",
+        "BOOT_LOADER_MAINLINE",
+        "SYS_DARWIN_RESERVED",
+        "VENDOR_XIAOMI_STUB",
+        "SNAPDRAGON_680_DRV",
+        "LINUX_7.1_RC2_CORE",
+        "USERDATA_ENCRYPTED"
+    ]
+
+    for i, name in enumerate(partitions):
+        start = entries_offset + (i * 128)
+        # Type GUID (Fake) & Unique GUID (Random)
+        data[start:start+16] = os.urandom(16)
+        data[start+16:start+32] = os.urandom(16)
+        # LBA Start/End
+        struct.pack_into("<QQQ", data, start+32, 1024*(i+1), 1024*(i+2), 0)
+        # Partition Name (UTF-16LE)
+        name_bytes = name.encode('utf-16le')
+        data[start+56:start+56+len(name_bytes)] = name_bytes
+
+    # Extended Vendor Block
+    vendor_offset = 32768
+    vendor_data = (
+        b"BOOT_CONFIG_DATA\x00"
+        b"TARGET=sys_darwin\x00"
+        b"SOC_ID=SM6225\x00"
+        b"LOADER_VER=7.1.2-RC2\x00"
+    )
+    data[vendor_offset:vendor_offset+len(vendor_data)] = vendor_data
+
+    with open(filename, "wb") as f:
+        f.write(data)
+
+if __name__ == "__main__":
+    generate_gpt_image()

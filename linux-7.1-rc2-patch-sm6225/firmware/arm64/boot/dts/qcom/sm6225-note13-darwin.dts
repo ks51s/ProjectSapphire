@@ -1,0 +1,21 @@
+/dts-v1/;
+
+#include "sm6225.dtsi"
+
+/ {
+	model = "Xiaomi Redmi Note 13";
+	compatible = "xiaomi,note13,sapphire,sapphiren", "qcom,sm6225";
+
+	chosen {
+		bootargs = "console=ttyMSM0 earlycon=msm_geni_serial,0xa90000 darwin_mode=enabled root=UUID=7141-AF01";
+	};
+
+	soc {
+		darwin-bridge@1f00000 {
+			compatible = "apple,xnu-bridge";
+			reg = <0x1f00000 0x1000>;
+			interrupts = <0 154 4>;
+			status = "okay";
+		};
+	};
+};
