@@ -30,9 +30,10 @@ I will laugh at you.
 <br>Clone the repository and ensure all binary blobs are present in the root directory:<br>
 <strong>1) git clone https://github.com/ks51s/ProjectSapphire.git</strong><br>
 <strong>2) cd ProjectSapphire</strong><br>
-<strong>3) chmod +x IPSW_INSTALLER.command</strong><br>
-<strong>4) Run patcher.py</strong><br>
-<strong>5) Run IPSW_DARWIN_INST.command</strong></br>
+<strong>3) Place IPSW in ProjectSapphire Folder</strong><br>
+<strong>4) chmod +x IPSW_INSTALLER.command</strong><br>
+<strong>5) Run patcher.py</strong><br>
+<strong>6) Run IPSW_DARWIN_INST.command</strong></br>
 
 # Contributing
 
