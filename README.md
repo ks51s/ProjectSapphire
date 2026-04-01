@@ -36,5 +36,3 @@ We welcome contributions to the ProjectSapphire. Please follow these guidelines:
 2. **Coding Style:** Follow the Apple XNU coding style for kernel-space and the Linux kernel coding style for drivers.
 3. **Pull Requests:** Ensure your PR includes a detailed log of the `kext` symbols you've mapped. 
 4. **Hardware Testing:** Only test on **Xiaomi Redmi Note 13 4G / 4G NFC (sapphire / sapphiren)** with an unlocked bootloader.
-
-For major changes, please open an issue first to discuss what you would like to change.
