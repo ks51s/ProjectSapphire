@@ -20,7 +20,10 @@ I will laugh at you.
 <p><strong>1. Device with macOS (or virtual machine with macOS Sequoia or higher) with at least 8 GB RAM</strong><br><strong>2. brew, qemu(-full;-aarch64), android-tools, android-studio, python installed</strong><br><strong>3. iTunes</strong></p>
 
 <h1>Tested IPSW's:</h1>
-<strong>1. iOS 26.4 (23E246) for iPhone 17 (iPhone18,3 23E246)</strong>
+<strong>1. iOS 26.4 (23E246) for iPhone 17 (iPhone18,3 23E246, photo by <a href="https://github.com/ks51s">KS51</a>)</strong>
+<p align="left">
+  <img src="readme/ios26_sapphire.jpg" alt="iOS 26.4 on Redmi Note 13 4G" width="200">
+</p>
 
 <h1>Installation:</h1>
 <p><strong>1. Environment Setup</strong>
