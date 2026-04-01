@@ -5,6 +5,9 @@
 
 <p align="center"><strong>Helping you build and run iOS 26.4 (especially 23E246).</strong></p>
 
+> [!IMPORTANT]
+> happy april foolz!! this repo was only made for april fools yea
+
 > [!CAUTION]
 > Your warranty is now void.
 I am not responsible for bricked devices, dead SD cards, thermonuclear war,
